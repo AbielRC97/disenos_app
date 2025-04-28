@@ -12,7 +12,7 @@ class HeadersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HeadersCuadrado()
+      body: HeadersBordesRendondeados()
     );
   }
 }
