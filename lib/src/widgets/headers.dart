@@ -67,3 +67,43 @@ class _HeadersDiagonalPainter extends CustomPainter {
     return true;
   }
 }
+
+
+class HeadersTriangular extends StatelessWidget {
+  const HeadersTriangular({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: CustomPaint(
+        painter: _HeadersTriangularPainter(),
+      ),
+    );
+  }
+}
+
+class _HeadersTriangularPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+    //Propiedades
+    paint.color = Color(0xFF615AAB);
+    paint.style = PaintingStyle.fill;
+    paint.strokeWidth = 2;
+
+    final path = Path();
+    // Dibujar en el path
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+    
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
