@@ -135,8 +135,47 @@ class _HeadersPiramidePainter extends CustomPainter {
     // Dibujar en el path
     path.lineTo(0, size.height * .30);
     path.lineTo(size.width * .5, size.height * .40);
-    path.lineTo(size.width , size.height * .30);
-    path.lineTo(size.width , 0);
+    path.lineTo(size.width, size.height * .30);
+    path.lineTo(size.width, 0);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class HeadersCurva extends StatelessWidget {
+  const HeadersCurva({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: CustomPaint(
+        painter: _HeadersCurvaPainter(),
+      ),
+    );
+  }
+}
+
+class _HeadersCurvaPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+    //Propiedades
+    paint.color = Color(0xFF615AAB);
+    paint.style = PaintingStyle.fill;
+    paint.strokeWidth = 20;
+
+    final path = Path();
+    // Dibujar en el path
+    path.lineTo(0, size.height * .20);
+    path.quadraticBezierTo(
+        size.width * .50, size.height * .35, size.width, size.height * .20);
+    path.lineTo(size.width, 0);
     canvas.drawPath(path, paint);
   }
 
