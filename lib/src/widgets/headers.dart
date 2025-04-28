@@ -184,3 +184,45 @@ class _HeadersCurvaPainter extends CustomPainter {
     return true;
   }
 }
+
+class HeadersWaves extends StatelessWidget {
+  const HeadersWaves({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: CustomPaint(
+        painter: _HeadersWavesPainter(),
+      ),
+    );
+  }
+}
+
+class _HeadersWavesPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+    //Propiedades
+    paint.color = Color(0xFF615AAB);
+    paint.style = PaintingStyle.fill;
+    paint.strokeWidth = 20;
+
+    final path = Path();
+    // Dibujar en el path
+    path.lineTo(0, size.height * .20);
+    path.quadraticBezierTo(size.width * .25, size.height * .30,
+        size.width * .50, size.height * .20);
+
+    path.quadraticBezierTo(
+        size.width * .75, size.height * .10, size.width, size.height * .20);
+    path.lineTo(size.width, 0);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
