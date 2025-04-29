@@ -10,16 +10,42 @@ class RadialProgress extends StatefulWidget {
   State<RadialProgress> createState() => _RadialProgressState();
 }
 
-class _RadialProgressState extends State<RadialProgress> {
+class _RadialProgressState extends State<RadialProgress>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late double prevPorcentage;
+  @override
+  void initState() {
+    prevPorcentage = widget.percentage;
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: CustomPaint(
-        painter: _MiRadialProgress(widget.percentage),
-      ),
-    );
+    controller.forward(from: 0.0);
+    final dif = widget.percentage - prevPorcentage;
+    prevPorcentage = widget.percentage;
+    return AnimatedBuilder(
+        animation: controller,
+        builder: (BuildContext ctx, Widget? child) {
+          return Container(
+            padding: EdgeInsets.all(10),
+            width: double.infinity,
+            height: double.infinity,
+            child: CustomPaint(
+              painter: _MiRadialProgress(
+                  (widget.percentage - dif) + (dif * controller.value)),
+            ),
+          );
+        });
   }
 }
 

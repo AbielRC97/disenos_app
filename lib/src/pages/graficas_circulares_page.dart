@@ -10,6 +10,7 @@ class GraficasCircularesPage extends StatefulWidget {
 
 class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
   double porcentage = 0.0;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
