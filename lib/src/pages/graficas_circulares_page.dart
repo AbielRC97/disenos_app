@@ -1,14 +1,14 @@
 import 'package:disenos_app/src/widgets/radial_progress.dart';
 import 'package:flutter/material.dart';
 
-class GraficsCircularesPage extends StatefulWidget {
-  const GraficsCircularesPage({super.key});
+class GraficasCircularesPage extends StatefulWidget {
+  const GraficasCircularesPage({super.key});
 
   @override
-  State<GraficsCircularesPage> createState() => _GraficsCircularesPageState();
+  State<GraficasCircularesPage> createState() => _GraficasCircularesPageState();
 }
 
-class _GraficsCircularesPageState extends State<GraficsCircularesPage> {
+class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
   double porcentage = 0.0;
   @override
   Widget build(BuildContext context) {
@@ -25,13 +25,13 @@ class _GraficsCircularesPageState extends State<GraficsCircularesPage> {
         },
       ),
       body: Center(
-        child: Container(
-          width: 300,
-          height: 300,
-          color: Colors.red,
-          child: RadialProgress(percentage: 40.0,),
-        )
-      ),
+          child: SizedBox(
+        width: 300,
+        height: 300,
+        child: RadialProgress(
+          percentage: porcentage,
+        ),
+      )),
     );
   }
 }
