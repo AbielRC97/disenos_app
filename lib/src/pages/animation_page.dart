@@ -23,6 +23,7 @@ class _CuadradoAnimadoState extends State<_CuadradoAnimado>
   late AnimationController controller;
   late Animation<double> rotacion;
   late Animation<double> opasity;
+  late Animation<double> moveToRigth;
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class _CuadradoAnimadoState extends State<_CuadradoAnimado>
         .animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
     opasity = Tween(begin: 0.1, end: 1.0).animate(CurvedAnimation(
         parent: controller, curve: Interval(0, 0.25, curve: Curves.easeOut)));
+    moveToRigth = Tween(begin: 0.0, end: 200.0).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
     controller.addListener(() {
       if (controller.status == AnimationStatus.completed) {
         controller.repeat();
@@ -52,11 +54,14 @@ class _CuadradoAnimadoState extends State<_CuadradoAnimado>
     return AnimatedBuilder(
         animation: controller,
         builder: (BuildContext ctx, Widget? child) {
-          return Transform.rotate(
-            angle: rotacion.value,
-            child: Opacity(
-              opacity: opasity.value,
-              child: _Rectangulo(),
+          return Transform.translate(
+            offset: Offset(moveToRigth.value, 0),
+            child: Transform.rotate(
+              angle: rotacion.value,
+              child: Opacity(
+                opacity: opasity.value,
+                child: _Rectangulo(),
+              ),
             ),
           );
         });
