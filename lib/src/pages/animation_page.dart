@@ -30,7 +30,8 @@ class _CuadradoAnimadoState extends State<_CuadradoAnimado>
         vsync: this, duration: Duration(milliseconds: 4000));
     rotacion = Tween(begin: 0.0, end: 2 * 3.1416)
         .animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
-    opasity = Tween(begin: 0.1, end: 1.0).animate(controller);
+    opasity = Tween(begin: 0.1, end: 1.0).animate(CurvedAnimation(
+        parent: controller, curve: Interval(0, 0.25, curve: Curves.easeOut)));
     controller.addListener(() {
       if (controller.status == AnimationStatus.completed) {
         controller.repeat();
