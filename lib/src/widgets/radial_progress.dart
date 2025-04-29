@@ -3,8 +3,16 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class RadialProgress extends StatefulWidget {
-  final percentage;
-  const RadialProgress({super.key, this.percentage});
+  final double percentage;
+  final Color primaryColor;
+  final Color secundaryColor;
+  final double strokeWidth;
+  const RadialProgress(
+      {super.key,
+      required this.percentage,
+      this.primaryColor = Colors.blue,
+      this.secundaryColor = Colors.grey,
+      this.strokeWidth = 20});
 
   @override
   State<RadialProgress> createState() => _RadialProgressState();
@@ -42,7 +50,10 @@ class _RadialProgressState extends State<RadialProgress>
             height: double.infinity,
             child: CustomPaint(
               painter: _MiRadialProgress(
-                  (widget.percentage - dif) + (dif * controller.value)),
+                  (widget.percentage - dif) + (dif * controller.value),
+                  widget.primaryColor,
+                  widget.secundaryColor,
+                  widget.strokeWidth),
             ),
           );
         });
@@ -51,13 +62,17 @@ class _RadialProgressState extends State<RadialProgress>
 
 class _MiRadialProgress extends CustomPainter {
   final double procentage;
+  final Color primaryColor;
+  final Color secundaryColor;
+  final double strokeWidth;
 
-  _MiRadialProgress(this.procentage);
+  _MiRadialProgress(this.procentage, this.primaryColor, this.secundaryColor,
+      this.strokeWidth);
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..strokeWidth = 5
+      ..strokeWidth = strokeWidth
       ..color = Colors.grey
       ..style = PaintingStyle.stroke;
 
@@ -67,8 +82,8 @@ class _MiRadialProgress extends CustomPainter {
     canvas.drawCircle(center, radius, paint);
 
     final paintArco = Paint()
-      ..strokeWidth = 5
-      ..color = Colors.pink
+      ..strokeWidth = strokeWidth * .7
+      ..color = primaryColor
       ..style = PaintingStyle.stroke;
 
     double arcAngle = 2 * pi * (procentage / 100);
