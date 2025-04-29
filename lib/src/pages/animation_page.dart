@@ -27,10 +27,10 @@ class _CuadradoAnimadoState extends State<_CuadradoAnimado>
   void initState() {
     controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: 4000));
-    rotacion = Tween(begin: 0.0, end: 2 * 3.1416).animate(controller);
+    rotacion = Tween(begin: 0.0, end: 2 * 3.1416).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
     controller.addListener(() {
       if (controller.status == AnimationStatus.completed) {
-        controller.reverse();
+        controller.repeat();
       }
     });
     super.initState();
