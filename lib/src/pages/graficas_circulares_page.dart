@@ -10,7 +10,7 @@ class GraficasCircularesPage extends StatefulWidget {
 
 class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
   double porcentage = 0.0;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,16 +25,32 @@ class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
           });
         },
       ),
-      body: Center(
-          child: SizedBox(
-        width: 300,
-        height: 300,
-        child: RadialProgress(
-          percentage: porcentage,
-          primaryColor: Colors.deepPurple,
-          secundaryColor: Colors.black87,
-        ),
-      )),
+      body: CustomRadialProgress(
+        porcentage: porcentage,
+        color: Colors.pinkAccent,
+      ),
     );
+  }
+}
+
+class CustomRadialProgress extends StatelessWidget {
+  final Color color;
+  const CustomRadialProgress(
+      {super.key, required this.porcentage, required this.color});
+
+  final double porcentage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: SizedBox(
+      width: 300,
+      height: 300,
+      child: RadialProgress(
+        percentage: porcentage,
+        primaryColor: color,
+        secundaryColor: Colors.black87,
+      ),
+    ));
   }
 }
