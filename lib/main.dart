@@ -1,3 +1,4 @@
+
 import 'package:disenos_app/src/pages/slideshow_page.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Diseños APP',
       debugShowCheckedModeBanner: false,
-      home: SlidesShowPage(),
+      home: SlideshowPage(),
     );
   }
 }
