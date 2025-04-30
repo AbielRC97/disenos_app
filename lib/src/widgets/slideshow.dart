@@ -4,15 +4,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Slideshow extends StatelessWidget {
   final List<Widget> slides;
-  const Slideshow({super.key, required this.slides});
+  final bool topDots;
+  final Color primaryColor;
+  final Color secundaryColor;
+  const Slideshow(
+      {super.key,
+      required this.slides,
+      this.topDots = false,
+      this.primaryColor = Colors.pinkAccent,
+      this.secundaryColor = Colors.grey});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SliderCubit(),
-      child: Center(
-        child: Column(
-          children: [Expanded(child: _Slides(slides)), _Dots(slides.length)],
+      child: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              if (topDots) _Dots(slides.length, primaryColor, secundaryColor),
+              Expanded(child: _Slides(slides)),
+              if (!topDots) _Dots(slides.length, primaryColor, secundaryColor),
+            ],
+          ),
         ),
       ),
     );
@@ -21,7 +35,9 @@ class Slideshow extends StatelessWidget {
 
 class _Dots extends StatelessWidget {
   final int totalItems;
-  const _Dots(this.totalItems);
+  final Color primaryColor;
+  final Color secundaryColor;
+  const _Dots(this.totalItems, this.primaryColor, this.secundaryColor);
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -29,7 +45,8 @@ class _Dots extends StatelessWidget {
       height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(totalItems, (index) => _Dot(index)),
+        children: List.generate(
+            totalItems, (index) => _Dot(index, primaryColor, secundaryColor)),
       ),
     );
   }
@@ -37,7 +54,9 @@ class _Dots extends StatelessWidget {
 
 class _Dot extends StatelessWidget {
   final int index;
-  const _Dot(this.index);
+  final Color primaryColor;
+  final Color secundaryColor;
+  const _Dot(this.index, this.primaryColor, this.secundaryColor);
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +67,8 @@ class _Dot extends StatelessWidget {
           width: 12,
           height: 12,
           decoration: BoxDecoration(
-            color: (currentPage.round() == index)
-                ? Colors.pinkAccent
-                : Colors.grey,
+            color:
+                (currentPage.round() == index) ? primaryColor : secundaryColor,
             shape: BoxShape.circle,
           ),
         );
