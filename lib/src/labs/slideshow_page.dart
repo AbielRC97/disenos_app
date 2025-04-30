@@ -9,7 +9,7 @@ class SlidesShowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SliderCubit(),
+      create: (_) => SliderCubit(bulletPrimary: 15, bulletSecondary: 12),
       child: Scaffold(
         body: Column(
           children: [Expanded(child: _Slides()), _Dots()],
@@ -41,14 +41,15 @@ class _Dot extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SliderCubit, SliderState>(
       builder: (context, state) {
+        Color color = (state.currentPage.round() == index)
+            ? Colors.pinkAccent
+            : Colors.grey;
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 15),
           width: 12,
           height: 12,
           decoration: BoxDecoration(
-            color: (state.currentPage.round() == index)
-                ? Colors.pinkAccent
-                : Colors.grey,
+            color: color,
             shape: BoxShape.circle,
           ),
         );

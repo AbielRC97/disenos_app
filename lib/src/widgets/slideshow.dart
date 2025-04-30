@@ -7,9 +7,14 @@ class Slideshow extends StatelessWidget {
   final bool topDots;
   final Color primaryColor;
   final Color secundaryColor;
+
+  final double bulletPrimary;
+  final double bulletSecondary;
   const Slideshow(
       {super.key,
       required this.slides,
+      this.bulletPrimary = 12,
+      this.bulletSecondary = 12,
       this.topDots = false,
       this.primaryColor = Colors.pinkAccent,
       this.secundaryColor = Colors.grey});
@@ -18,7 +23,10 @@ class Slideshow extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SliderCubit(
-          primaryColor: primaryColor, secondaryColor: secundaryColor),
+          primaryColor: primaryColor,
+          secondaryColor: secundaryColor,
+          bulletPrimary: bulletPrimary,
+          bulletSecondary: bulletSecondary),
       child: SafeArea(
         child: Center(
           child: Column(
@@ -64,14 +72,21 @@ class _Dot extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SliderCubit, SliderState>(
       builder: (context, state) {
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: 15),
-          width: 12,
-          height: 12,
-          decoration: BoxDecoration(
-            color: (state.currentPage.round() == index)
+        Color color =
+            (state.currentPage >= index - .5 && state.currentPage < index + .5)
                 ? state.primaryColor
-                : state.secondaryColor,
+                : state.secondaryColor;
+        double width =
+            (state.currentPage >= index - .5 && state.currentPage < index + .5)
+                ? state.bulletPrimary
+                : state.bulletSecondary;
+        return AnimatedContainer(
+          duration: Duration(milliseconds: 200),
+          margin: EdgeInsets.symmetric(horizontal: 15),
+          width: width,
+          height: width,
+          decoration: BoxDecoration(
+            color: color,
             shape: BoxShape.circle,
           ),
         );
