@@ -7,9 +7,35 @@ class SlidesShowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _Slides(),
+        body: Column(
+      children: [Expanded(child: _Slides()), _Dots()],
+    ));
+  }
+}
+
+class _Dots extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 70,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [_Dot(),  _Dot(), _Dot()],
       ),
+    );
+  }
+}
+
+class _Dot extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 15),
+      width: 12,
+      height: 12,
+      decoration:
+          BoxDecoration(color: Colors.pinkAccent, shape: BoxShape.circle),
     );
   }
 }
