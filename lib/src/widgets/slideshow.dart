@@ -17,14 +17,21 @@ class Slideshow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SliderCubit(),
+      create: (_) => SliderCubit(
+          primaryColor: primaryColor, secondaryColor: secundaryColor),
       child: SafeArea(
         child: Center(
           child: Column(
             children: [
-              if (topDots) _Dots(slides.length, primaryColor, secundaryColor),
+              if (topDots)
+                _Dots(
+                  slides.length,
+                ),
               Expanded(child: _Slides(slides)),
-              if (!topDots) _Dots(slides.length, primaryColor, secundaryColor),
+              if (!topDots)
+                _Dots(
+                  slides.length,
+                ),
             ],
           ),
         ),
@@ -35,9 +42,7 @@ class Slideshow extends StatelessWidget {
 
 class _Dots extends StatelessWidget {
   final int totalItems;
-  final Color primaryColor;
-  final Color secundaryColor;
-  const _Dots(this.totalItems, this.primaryColor, this.secundaryColor);
+  const _Dots(this.totalItems);
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -45,8 +50,7 @@ class _Dots extends StatelessWidget {
       height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-            totalItems, (index) => _Dot(index, primaryColor, secundaryColor)),
+        children: List.generate(totalItems, (index) => _Dot(index)),
       ),
     );
   }
@@ -54,21 +58,20 @@ class _Dots extends StatelessWidget {
 
 class _Dot extends StatelessWidget {
   final int index;
-  final Color primaryColor;
-  final Color secundaryColor;
-  const _Dot(this.index, this.primaryColor, this.secundaryColor);
+  const _Dot(this.index);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SliderCubit, double>(
-      builder: (context, currentPage) {
+    return BlocBuilder<SliderCubit, SliderState>(
+      builder: (context, state) {
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 15),
           width: 12,
           height: 12,
           decoration: BoxDecoration(
-            color:
-                (currentPage.round() == index) ? primaryColor : secundaryColor,
+            color: (state.currentPage.round() == index)
+                ? state.primaryColor
+                : state.secondaryColor,
             shape: BoxShape.circle,
           ),
         );

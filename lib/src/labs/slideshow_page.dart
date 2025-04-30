@@ -39,14 +39,14 @@ class _Dot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SliderCubit, double>(
-      builder: (context, currentPage) {
+    return BlocBuilder<SliderCubit, SliderState>(
+      builder: (context, state) {
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 15),
           width: 12,
           height: 12,
           decoration: BoxDecoration(
-            color: (currentPage.round() == index)
+            color: (state.currentPage.round() == index)
                 ? Colors.pinkAccent
                 : Colors.grey,
             shape: BoxShape.circle,
