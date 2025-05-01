@@ -1,4 +1,6 @@
+import 'package:disenos_app/src/cubits/pinterest_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PinterestButon {
   final Function onPressed;
@@ -90,17 +92,23 @@ class _PinterestMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => option.onPressed(),
-      behavior: HitTestBehavior.translucent,
-      child: Container(
-        padding: EdgeInsets.all(2),
-        child: Icon(
-          option.icon,
-          size: 25,
-          color: Colors.blueGrey,
+    return BlocBuilder<PinterestCubit, PinterestState>(
+        builder: (context, state) {
+      return GestureDetector(
+        onTap: () {
+          option.onPressed();
+          context.read<PinterestCubit>().updateItem(index);
+        },
+        behavior: HitTestBehavior.translucent,
+        child: Container(
+          padding: EdgeInsets.all(2),
+          child: Icon(
+            option.icon,
+            size: (state.selected == index) ? 30 : 25,
+            color: (state.selected == index) ? Colors.pink : Colors.blueGrey,
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -1,5 +1,7 @@
+import 'package:disenos_app/src/cubits/pinterest_cubit.dart';
 import 'package:disenos_app/src/widgets/pinterest_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class PinterestPage extends StatelessWidget {
@@ -7,8 +9,9 @@ class PinterestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PinterestMenu()
+    return BlocProvider(
+      create: (_) => PinterestCubit(),
+      child: Scaffold(body: PinterestMenu()),
     );
   }
 }
