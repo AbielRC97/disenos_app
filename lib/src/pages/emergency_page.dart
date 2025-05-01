@@ -10,7 +10,7 @@ class EmergencyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     /* body: IconHeader(
+      /* body: IconHeader(
         title: 'Haz solicitado',
         subTitle: 'Asistencia Médica',
         icon: FontAwesomeIcons.plus,
@@ -19,7 +19,15 @@ class EmergencyPage extends StatelessWidget {
           Color(0xff67acf2),
         ],
       ),*/
-      body:  Center(child: ButtonLarge()),
+      body: Center(
+          child: ButtonLarge(
+        icon: FontAwesomeIcons.carCrash,
+        gradient: [Color(0xff6989f5), Color(0xff906ef5)],
+        title: 'Motor Accident',
+        onPress: () {
+          print('Motor Accident');
+        },
+      )),
     );
   }
 }
