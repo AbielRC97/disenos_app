@@ -11,18 +11,71 @@ class PinterestPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => PinterestCubit(),
-      child: Scaffold(body: PinterestMenu()),
+      child: Scaffold(
+        //body: PinterestMenu()
+        body: Stack(
+          children: [
+            PinterestGrid(),
+            _PinterestMenuPositioned(),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class PinterestGrid extends StatelessWidget {
+class _PinterestMenuPositioned extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final widthScreen = MediaQuery.of(context).size.width;
+    return Positioned(
+      bottom: 30,
+      child: SizedBox(
+        height: 100,
+        width: widthScreen,
+        child: Align(
+          child: PinterestMenu(
+            backgroundColor: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PinterestGrid extends StatefulWidget {
+  const PinterestGrid({super.key});
+
+  @override
+  State<PinterestGrid> createState() => _PinterestGridState();
+}
+
+class _PinterestGridState extends State<PinterestGrid> {
   final List<int> items = List.generate(200, (i) => i);
-  PinterestGrid({super.key});
+  ScrollController scroll = ScrollController();
+  double prevScroll = 0;
+
+  @override
+  void initState() {
+    scroll.addListener(() {
+      context
+          .read<PinterestCubit>()
+          .updateShow(!(scroll.offset > prevScroll && scroll.offset > 150));
+      prevScroll = scroll.offset;
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scroll.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return StaggeredGridView.countBuilder(
+      controller: scroll,
       crossAxisCount: 4,
       itemCount: items.length,
       itemBuilder: (BuildContext context, int index) => _PinterestItem(

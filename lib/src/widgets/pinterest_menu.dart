@@ -32,16 +32,34 @@ class PinterestMenu extends StatelessWidget {
         },
         icon: Icons.supervised_user_circle),
   ];
+  final Color backgroundColor;
+  final Color activedColor;
+  final Color disabledColor;
 
-  PinterestMenu({super.key});
+  PinterestMenu(
+      {super.key,
+      this.backgroundColor = Colors.white,
+      this.activedColor = Colors.pink,
+      this.disabledColor = Colors.blueGrey});
 
   @override
   Widget build(BuildContext context) {
-    return PinterestMenuBackground(
-      child: _MenuItems(
-        menu: items,
-      ),
-    );
+    return BlocSelector<PinterestCubit, PinterestState, bool>(
+        selector: (state) => state.show,
+        builder: (context, show) {
+          context.read<PinterestCubit>().updateBackgroundColor(backgroundColor);
+          context.read<PinterestCubit>().updateActivedColor(activedColor);
+          context.read<PinterestCubit>().updateDisabledColor(disabledColor);
+          return AnimatedOpacity(
+            duration: Duration(milliseconds: 250),
+            opacity: (show) ? 1 : 0,
+            child: PinterestMenuBackground(
+              child: _MenuItems(
+                menu: items,
+              ),
+            ),
+          );
+        });
   }
 }
 
@@ -51,18 +69,24 @@ class PinterestMenuBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 250,
-        height: 60,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(100),
-            boxShadow: <BoxShadow>[
-              BoxShadow(color: Colors.black38, blurRadius: 10, spreadRadius: -5)
-            ]),
-        child: child,
-      ),
+    return BlocSelector<PinterestCubit, PinterestState, Color>(
+      selector: (state) => state.backgroundColor,
+      builder: (context, state) {
+        return Center(
+          child: Container(
+            width: 250,
+            height: 60,
+            decoration: BoxDecoration(
+                color: state,
+                borderRadius: BorderRadius.circular(100),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.black38, blurRadius: 10, spreadRadius: -5)
+                ]),
+            child: child,
+          ),
+        );
+      },
     );
   }
 }
@@ -105,7 +129,9 @@ class _PinterestMenuButton extends StatelessWidget {
           child: Icon(
             option.icon,
             size: (state.selected == index) ? 30 : 25,
-            color: (state.selected == index) ? Colors.pink : Colors.blueGrey,
+            color: (state.selected == index)
+                ? state.activedColor
+                : state.disabledColor,
           ),
         ),
       );
