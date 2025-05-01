@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:disenos_app/src/cubits/emergency_cubit.dart';
 import 'package:disenos_app/src/widgets/button_large.dart';
 import 'package:flutter/material.dart';
@@ -54,14 +55,16 @@ class EmergencyPage extends StatelessWidget {
               SizedBox(
                 height: 80,
               ),
-              ...items.map((item) => ButtonLarge(
+              ...items.map((item) => FadeInLeft(
+                  duration: Duration(milliseconds: 250),
+                  child: ButtonLarge(
                     icon: item.icon,
                     gradient: [item.color1, item.color2],
                     title: item.texto,
                     onPress: () {
                       print(item.texto);
                     },
-                  )),
+                  ))),
             ],
           )),
       _Encabezado()
@@ -87,9 +90,7 @@ class _Encabezado extends StatelessWidget {
             right: -20,
             top: 45,
             child: RawMaterialButton(
-              onPressed: () {
-
-              },
+              onPressed: () {},
               shape: CircleBorder(),
               child: FaIcon(
                 FontAwesomeIcons.ellipsisVertical,
