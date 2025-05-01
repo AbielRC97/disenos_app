@@ -4,13 +4,66 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+class ItemBoton {
+  final IconData icon;
+  final String texto;
+  final Color color1;
+  final Color color2;
+
+  ItemBoton(this.icon, this.texto, this.color1, this.color2);
+}
+
 class EmergencyPage extends StatelessWidget {
   const EmergencyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final items = <ItemBoton>[
+      ItemBoton(FontAwesomeIcons.carCrash, 'Motor Accident', Color(0xff6989F5),
+          Color(0xff906EF5)),
+      ItemBoton(FontAwesomeIcons.plus, 'Medical Emergency', Color(0xff66A9F2),
+          Color(0xff536CF6)),
+      ItemBoton(FontAwesomeIcons.theaterMasks, 'Theft / Harrasement',
+          Color(0xffF2D572), Color(0xffE06AA3)),
+      ItemBoton(FontAwesomeIcons.biking, 'Awards', Color(0xff317183),
+          Color(0xff46997D)),
+      ItemBoton(FontAwesomeIcons.carCrash, 'Motor Accident', Color(0xff6989F5),
+          Color(0xff906EF5)),
+      ItemBoton(FontAwesomeIcons.plus, 'Medical Emergency', Color(0xff66A9F2),
+          Color(0xff536CF6)),
+      ItemBoton(FontAwesomeIcons.theaterMasks, 'Theft / Harrasement',
+          Color(0xffF2D572), Color(0xffE06AA3)),
+      ItemBoton(FontAwesomeIcons.biking, 'Awards', Color(0xff317183),
+          Color(0xff46997D)),
+      ItemBoton(FontAwesomeIcons.carCrash, 'Motor Accident', Color(0xff6989F5),
+          Color(0xff906EF5)),
+      ItemBoton(FontAwesomeIcons.plus, 'Medical Emergency', Color(0xff66A9F2),
+          Color(0xff536CF6)),
+      ItemBoton(FontAwesomeIcons.theaterMasks, 'Theft / Harrasement',
+          Color(0xffF2D572), Color(0xffE06AA3)),
+      ItemBoton(FontAwesomeIcons.biking, 'Awards', Color(0xff317183),
+          Color(0xff46997D)),
+    ];
     return Scaffold(
-      /* body: IconHeader(
+        body: Stack(children: [
+      Container(
+          margin: EdgeInsets.only(top: 200),
+          child: ListView(
+            children: [
+              SizedBox(
+                height: 80,
+              ),
+              ...items.map((item) => ButtonLarge(
+                    icon: item.icon,
+                    gradient: [item.color1, item.color2],
+                    title: item.texto,
+                    onPress: () {
+                      print(item.texto);
+                    },
+                  )),
+            ],
+          )),
+      IconHeader(
         title: 'Haz solicitado',
         subTitle: 'Asistencia Médica',
         icon: FontAwesomeIcons.plus,
@@ -18,17 +71,8 @@ class EmergencyPage extends StatelessWidget {
           Color(0xff526bf6),
           Color(0xff67acf2),
         ],
-      ),*/
-      body: Center(
-          child: ButtonLarge(
-        icon: FontAwesomeIcons.carCrash,
-        gradient: [Color(0xff6989f5), Color(0xff906ef5)],
-        title: 'Motor Accident',
-        onPress: () {
-          print('Motor Accident');
-        },
-      )),
-    );
+      )
+    ]));
   }
 }
 
@@ -49,7 +93,7 @@ class IconHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => EmergencyCubit(gradient: gradient),
+        create: (_) => EmergencyCubit(gradient: gradient, icon: icon),
         child: Stack(children: <Widget>[
           _IconHeaderBackground(),
           Positioned(
@@ -97,20 +141,18 @@ class IconHeader extends StatelessWidget {
 class _IconHeaderBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<EmergencyCubit, EmergencyState, List<Color>>(
-        selector: (state) => state.gradient,
-        builder: (context, gradient) {
-          return Container(
-            width: double.infinity,
-            height: 300,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: gradient,
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter),
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(80))),
-          );
-        });
+    return BlocBuilder<EmergencyCubit, EmergencyState>(
+        builder: (context, state) {
+      return Container(
+        width: double.infinity,
+        height: 300,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: state.gradient,
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter),
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80))),
+      );
+    });
   }
 }

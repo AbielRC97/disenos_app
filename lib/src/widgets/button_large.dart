@@ -18,7 +18,7 @@ class ButtonLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => EmergencyCubit(gradient: gradient),
+      create: (_) => EmergencyCubit(gradient: gradient, icon: icon),
       child: GestureDetector(
         onTap: () => onPress(),
         child: Stack(children: [
@@ -65,10 +65,7 @@ class ButtonLarge extends StatelessWidget {
 class _ButtonLargeBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<EmergencyCubit, EmergencyState, List<Color>>(
-      selector: (state) {
-        return state.gradient;
-      },
+    return BlocBuilder<EmergencyCubit, EmergencyState>(
       builder: (context, state) {
         return Container(
           width: double.infinity,
@@ -82,7 +79,7 @@ class _ButtonLargeBackground extends StatelessWidget {
                     blurRadius: 10),
               ],
               borderRadius: BorderRadius.circular(15),
-              gradient: LinearGradient(colors: state)),
+              gradient: LinearGradient(colors: state.gradient)),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: Stack(
@@ -91,7 +88,7 @@ class _ButtonLargeBackground extends StatelessWidget {
                     right: -20,
                     top: -20,
                     child: FaIcon(
-                      FontAwesomeIcons.carCrash,
+                      state.icon,
                       size: 150,
                       color: Colors.white12,
                     ))
