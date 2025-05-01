@@ -1,5 +1,5 @@
 
-import 'package:disenos_app/src/pages/slideshow_page.dart';
+import 'package:disenos_app/src/pages/pinterest_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Diseños APP',
       debugShowCheckedModeBanner: false,
-      home: SlideshowPage(),
+      home: PinterestPage(),
     );
   }
 }
