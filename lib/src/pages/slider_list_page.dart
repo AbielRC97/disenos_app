@@ -5,7 +5,46 @@ class SliderListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _MainScroll(),
+      body: Stack(
+        children: [
+          _MainScroll(),
+          Positioned(bottom: -10, right: 0, child: _ButtomNewList())
+        ],
+      ),
+    );
+  }
+}
+
+class _ButtomNewList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      width: size.width * 0.9,
+      height:
+          size.height * .13, // puedes ajustar esta altura según lo que quieras
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xffed6762),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50),
+            ),
+          ),
+        ),
+        onPressed: () {
+          // tu lógica aquí
+        },
+        child: Text(
+          'CREATE NEW LIST',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 3,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -85,26 +124,6 @@ class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
     return maxHeight != oldDelegate.maxHeight ||
         minHeight != oldDelegate.minHeight ||
         child != oldDelegate.child;
-  }
-}
-
-class _ListaTareas extends StatelessWidget {
-  final items = [
-    _ListItem('Orange', Color(0xffF08F66)),
-    _ListItem('Family', Color(0xffF2A38A)),
-    _ListItem('Subscriptions', Color(0xffF7CDD5)),
-    _ListItem('Books', Color(0xffFCEBAF)),
-    _ListItem('Orange', Color(0xffF08F66)),
-    _ListItem('Family', Color(0xffF2A38A)),
-    _ListItem('Subscriptions', Color(0xffF7CDD5)),
-    _ListItem('Books', Color(0xffFCEBAF)),
-  ];
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: items.length,
-      itemBuilder: (BuildContext context, int index) => items[index],
-    );
   }
 }
 
