@@ -5,17 +5,27 @@ class SliderListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _Titulo(),
+      body: _ListaTareas(),
     );
   }
 }
 
 class _ListaTareas extends StatelessWidget {
+  final items = [
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+  ];
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 20,
-      itemBuilder: (BuildContext context, int index) => _ListItem(),
+      itemCount: items.length,
+      itemBuilder: (BuildContext context, int index) => items[index],
     );
   }
 }
@@ -37,14 +47,16 @@ class _Titulo extends StatelessWidget {
         ),
         Stack(
           children: [
-            SizedBox(width: 100,),
+            SizedBox(
+              width: 100,
+            ),
             Positioned(
-              bottom: 8,
+                bottom: 8,
                 child: Container(
-              width: 150,
-              height: 8,
-              color: Color(0xfff7cdd5),
-            )),
+                  width: 150,
+                  height: 8,
+                  color: Color(0xfff7cdd5),
+                )),
             Text(
               'List',
               style: TextStyle(
@@ -60,6 +72,11 @@ class _Titulo extends StatelessWidget {
 }
 
 class _ListItem extends StatelessWidget {
+  final String title;
+  final Color color;
+
+  const _ListItem(this.title, this.color);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,9 +85,9 @@ class _ListItem extends StatelessWidget {
       height: 130,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: Colors.orange, borderRadius: BorderRadius.circular(30)),
+          color: color, borderRadius: BorderRadius.circular(30)),
       child: Text(
-        'Orange',
+        title,
         style: TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
       ),
