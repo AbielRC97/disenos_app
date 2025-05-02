@@ -1,5 +1,4 @@
-
-import 'package:disenos_app/src/pages/emergency_page.dart';
+import 'package:disenos_app/src/pages/slider_list_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,8 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Diseños APP',
       debugShowCheckedModeBanner: false,
-      home: EmergencyPage(),
+      home: SliderListPage(),
     );
   }
 }
-
