@@ -29,19 +29,62 @@ class _MainScroll extends StatelessWidget {
     _ListItem('Subscriptions', Color(0xffF7CDD5)),
     _ListItem('Books', Color(0xffFCEBAF)),
   ];
+
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          floating: true,
-          elevation: 0,
-          backgroundColor: Colors.red,
-          title: Text('Hola Mundo'),
-        ),
-        SliverList(delegate: SliverChildListDelegate(items)),
-      ],
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(
+            floating: true,
+            delegate: _SliverCustomHeaderDelegate(
+              minHeight: 170,
+              maxHeight: 200,
+              child: Container(
+                alignment: Alignment.centerLeft,
+                color: Colors.white,
+                child: _Titulo(),
+              ),
+            ),
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate([
+            ...items,
+            SizedBox(
+              height: 100,
+            )
+          ])),
+        ],
+      ),
     );
+  }
+}
+
+class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+  _SliverCustomHeaderDelegate(
+      {required this.minHeight, required this.maxHeight, required this.child});
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox.expand(
+      child: child,
+    );
+  }
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  bool shouldRebuild(_SliverCustomHeaderDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }
 
@@ -70,9 +113,6 @@ class _Titulo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 30,
-        ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
           child: Text(
